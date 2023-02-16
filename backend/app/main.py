@@ -15,10 +15,8 @@ def init_app():
 
     app = FastAPI(
         title= "Kehdinga Raymond Todo",
-        description= "Login Page",
+        description= "K-R API",
         version= "1.0",
-        openapi_url="/openapi.json",
-
     )
 
     app.add_middleware(
