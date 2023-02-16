@@ -1,10 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from fastapi_mail import ConnectionConfig
-from jose import ExpiredSignatureError, JWSError
-from jose.exceptions import JWTClaimsError
+from jose import ExpiredSignatureError
 from repository.auth_repo import JWTRepo
-from repository.auth_repo import JWTBearer
-import time
 
 from schema import ResponseSchema, RegisterSchema, LoginSchema, ForgotPasswordSchema, ResetPasswordSchema
 from service.auth import AuthService
@@ -12,10 +9,9 @@ from service.send_email import send_registration_mail
 from fastapi.encoders import jsonable_encoder
 from dotenv import load_dotenv
 import os
-import base64
 from pathlib import Path
 from fastapi import Request, BackgroundTasks
-from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
+from fastapi_mail import ConnectionConfig
 from pathlib import Path
 
 load_dotenv()

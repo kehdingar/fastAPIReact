@@ -5,7 +5,6 @@ from config import db
 from schema import TodoSchema, ResponseSchema, DeleteTodoSchema
 from repository.todos import TodosRepository
 from fastapi import HTTPException
-from typing import List
 from model import Todo
 from repository.todos import TodosRepository
 from uuid import uuid4

@@ -1,5 +1,5 @@
 from typing import List, Optional
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, String
 from sqlmodel import SQLModel, Field, Relationship
 from .mixins import TimeMixin
 from .user_role import UsersRole
