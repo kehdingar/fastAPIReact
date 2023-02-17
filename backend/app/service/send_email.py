@@ -5,8 +5,13 @@ from typing import Dict
 from fastapi import BackgroundTasks
 from pathlib import Path
 import os
+from pathlib import Path
 
-load_dotenv()
+
+env_path = Path(__file__).cwd()
+env_file_path = env_path.joinpath("app/.env")
+
+load_dotenv(env_file_path)
 
 
 class Envs:

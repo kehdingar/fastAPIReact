@@ -4,7 +4,13 @@ from sqlmodel import SQLModel
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
+from pathlib import Path
+
+
+env_path = Path(__file__).cwd()
+env_file_path = env_path.joinpath("app/.env")
+
+load_dotenv(env_file_path)
 
 class Envs:
     DATABASE_USERNAME = os.getenv("DATABASE_USERNAME")

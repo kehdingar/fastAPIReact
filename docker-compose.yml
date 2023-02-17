@@ -1,7 +1,22 @@
 version: '3.8'
 services:
+  nginx:
+    container_name: Nginx
+    image: nginx:latest
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - shared-volume:/usr/share/nginx/html
+    ports:
+      - 3000:80
+    restart: always
+    depends_on:
+      - backend
+      - frontend
+
   postgres:
+    container_name: Postgres
     image: postgres:15
+    env_file: .env
     restart: always
     environment:
       POSTGRES_USER: ${DATABASE_NAME}
@@ -12,6 +27,7 @@ services:
       - db-data:/var/lib/postgresql/data:cached
 
   pgadmin:
+    container_name: PostgresAdmin
     image: dpage/pgadmin4
     environment:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
@@ -22,6 +38,8 @@ services:
       - postgres
 
   backend:
+    container_name: FastAPI
+    env_file: .env
     build: 
       context: backend
       dockerfile: Dockerfile
@@ -37,7 +55,18 @@ services:
       DATABASE_URL: postgresql+asyncpg://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:5432/${DATABASE_NAME}
     depends_on:
       - "postgres"
-      
+
+  frontend:
+    container_name: React
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    stdin_open: true
+    volumes:
+      - './frontend:/app:cached'
+      - './frontend/node_modules:/app/node_modules:cached'
+      - 'shared-volume:/app/build'      
 volumes:
   db-data:
+  shared-volume:
 

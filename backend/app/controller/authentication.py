@@ -7,39 +7,10 @@ from schema import ResponseSchema, RegisterSchema, LoginSchema, ForgotPasswordSc
 from service.auth import AuthService
 from service.send_email import send_registration_mail
 from fastapi.encoders import jsonable_encoder
-from dotenv import load_dotenv
-import os
-from pathlib import Path
 from fastapi import Request, BackgroundTasks
-from fastapi_mail import ConnectionConfig
-from pathlib import Path
-
-load_dotenv()
 
 router = APIRouter(prefix="/auth", tags=['Authentication'])
 
-class Envs:
-    MAIL_USERNAME = os.getenv("MAIL_USERNAME")
-    MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
-    MAIL_FROM = os.getenv("MAIL_FROM")
-    MAIL_PORT = os.getenv("MAIL_PORT")
-    MAIL_SERVER = os.getenv("MAIL_SERVER")
-    MAIL_FROM_NAME = os.getenv("MAIL_FROM_NAME")
-
-
-conf = ConnectionConfig(
-    MAIL_USERNAME=Envs.MAIL_USERNAME,
-    MAIL_PASSWORD=Envs.MAIL_PASSWORD,
-    MAIL_FROM=Envs.MAIL_FROM,
-    MAIL_PORT=Envs.MAIL_PORT,
-    MAIL_SERVER=Envs.MAIL_SERVER,
-    MAIL_FROM_NAME=Envs.MAIL_FROM_NAME,
-    MAIL_STARTTLS=True,
-    MAIL_SSL_TLS=False,
-    USE_CREDENTIALS=True,
-    VALIDATE_CERTS=True,
-    TEMPLATE_FOLDER= Path(__file__).parent.parent / 'templates',
-)
 
 @router.post("/register", response_model=ResponseSchema, response_model_exclude_none=True)
 async def register(request_body: RegisterSchema,request: Request,background_tasks: BackgroundTasks):
