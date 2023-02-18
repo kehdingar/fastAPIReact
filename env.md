@@ -1,5 +1,4 @@
 # Sample Varaibles for env file
-
 MAIL_USERNAME=
 MAIL_PASSWORD=
 MAIL_FROM=
